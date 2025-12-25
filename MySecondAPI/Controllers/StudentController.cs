@@ -13,7 +13,7 @@ namespace MySecondAPI.Controllers
 
         //Fetch All Students Data
 
-        [HttpGet("Get")]
+        [HttpGet]
         public IActionResult GetStudent()
         {
             if(list.Count > 0)
@@ -25,10 +25,10 @@ namespace MySecondAPI.Controllers
 
         //Fetch Student By Id
 
-        [HttpGet("ById")]
+        [HttpGet("student/{id}")]
         public IActionResult GetStudentById(int id)
         {
-           Student ?student = list.FirstOrDefault(ob=>ob.Id == id);
+           Student ?student = list.FirstOrDefault(ob=>ob.studentId == id);
             if(student != null)
             {
                 return Ok(new { Message = "Data Fetch By Id Successfully",Data=student});
@@ -38,7 +38,7 @@ namespace MySecondAPI.Controllers
 
         //Adding the Data or Post the Data
 
-        [HttpPost("Post")]
+        [HttpPost("student")]
         public IActionResult PostStudent([FromBody]Student student)
         {
             list.Add(student);
@@ -71,14 +71,14 @@ namespace MySecondAPI.Controllers
 
         //Perticular Parameter will Change 
 
-        [HttpPatch("UpdateName/{id}")]
+        [HttpPatch("studentName/{id}")]
         public IActionResult PatchStudent(int id, [FromBody] string newName)
         {
-            Student? student = list.FirstOrDefault(s => s.Id == id);
+            Student? student = list.FirstOrDefault(s => s.studentId == id);
 
             if (student != null)
             {
-                student.Name = newName;
+                student.studentName = newName;
                 return Ok(new { Message = "Student Name Updated Successfully", Data = student });
             }
 
